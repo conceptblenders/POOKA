@@ -1,0 +1,9 @@
+{#-
+  The POOKA logo is the word POOKA in the brand face, shipped as outlines
+  (docs/assets/brand/pooka-wordmark.svg) rather than as a webfont.
+
+  It is rendered as a masked element instead of an <img> so the mark inherits
+  currentColor: paper on the petrol header, petrol on the paper hero, and solid
+  ink in print. One asset, every context.
+-#}
+<span class="pooka-mark" role="img" aria-label="{{ config.site_name }}"></span>

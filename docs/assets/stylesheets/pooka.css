@@ -1,0 +1,780 @@
+/* ============================================================================
+   POOKA — Material for MkDocs theme.
+
+   Translates the approved "Polybrain + POOKA" design system into Material.
+   The design tokens below are copied from that system verbatim; everything
+   after them maps those tokens onto Material's own custom properties, so the
+   theme stays readable and the brand stays in one place.
+
+   Design intent: structure first. Petrol carries the structure, ember is the
+   rationed signal, warm graphite keeps it human. Calm, authoritative, precise.
+   ============================================================================ */
+
+/* ---------------------------------------------------------------------------
+   1. Design tokens (from the design system: colors, typography, spacing,
+      elevation). Kept under their original names so the two stay comparable.
+   --------------------------------------------------------------------------- */
+
+:root {
+  /* Neutrals: warm graphite */
+  --paper: #fbfbf9;
+  --ink-050: #f4f5f2;
+  --ink-100: #ebece8;
+  --ink-200: #dcded8;
+  --ink-300: #c0c4bc;
+  --ink-400: #969c92;
+  --ink-500: #6b7269;
+  --ink-600: #4b5249;
+  --ink-700: #343a33;
+  --ink-800: #232824;
+  --ink-900: #171b17;
+
+  /* Petrol: primary / structure */
+  --petrol-800: #072e2b;
+  --petrol-700: #0b3e3a;
+  --petrol-600: #0e4f4a;
+  --petrol-500: #157069;
+  --petrol-400: #3e938c;
+  --petrol-300: #86b8b2;
+  --petrol-100: #dae9e6;
+  --petrol-050: #ecf4f2;
+
+  /* Ember: accent / signal */
+  --ember-700: #a9531f;
+  --ember-600: #c4652e;
+  --ember-500: #db7b3c;
+  --ember-300: #eeb98c;
+  --ember-100: #f7e5d6;
+  --ember-050: #fbf1e8;
+
+  /* Type */
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --lh-heading: 1.16;
+  --lh-body: 1.62;
+  --ls-tight: -0.02em;
+  --ls-kicker: 0.14em;
+
+  /* Spacing: 8px module */
+  --u: 8px;
+  --space-2: 8px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --dot-cell: 24px;
+
+  /* Radius + elevation: architectural, not soft */
+  --r-1: 4px;
+  --r-2: 8px;
+  --r-3: 12px;
+  --r-4: 16px;
+
+  --shadow-1: 0 1px 2px rgba(23, 27, 23, 0.06), 0 1px 1px rgba(23, 27, 23, 0.04);
+  --shadow-2: 0 2px 4px rgba(23, 27, 23, 0.06), 0 6px 16px rgba(23, 27, 23, 0.07);
+
+  /* Material font hooks */
+  --md-text-font: "IBM Plex Sans";
+  --md-code-font: "IBM Plex Mono";
+}
+
+/* ---------------------------------------------------------------------------
+   2. Palette mapping — light ("default" scheme)
+   --------------------------------------------------------------------------- */
+
+[data-md-color-scheme="default"] {
+  --pooka-bg: var(--paper);
+  --pooka-surface: #ffffff;
+  --pooka-surface-sunken: var(--ink-050);
+  --pooka-border: var(--ink-200);
+  --pooka-border-strong: var(--ink-300);
+  --pooka-text: var(--ink-900);
+  --pooka-text-muted: var(--ink-500);
+  --pooka-text-subtle: var(--ink-400);
+  --pooka-brand: var(--petrol-600);
+  --pooka-brand-tint: var(--petrol-050);
+  --pooka-accent: var(--ember-600);
+  --pooka-accent-tint: var(--ember-050);
+  --pooka-node: var(--ink-300);
+  --pooka-shadow-1: var(--shadow-1);
+  --pooka-shadow-2: var(--shadow-2);
+
+  --md-default-bg-color: var(--paper);
+  --md-default-fg-color: var(--ink-900);
+  --md-default-fg-color--light: var(--ink-500);
+  --md-default-fg-color--lighter: var(--ink-400);
+  --md-default-fg-color--lightest: var(--ink-200);
+
+  --md-typeset-color: var(--ink-900);
+  --md-typeset-a-color: var(--petrol-600);
+  --md-typeset-mark-color: var(--ember-100);
+
+  --md-code-bg-color: var(--ink-050);
+  --md-code-fg-color: var(--ink-800);
+
+  --md-footer-bg-color: var(--ink-900);
+  --md-footer-bg-color--dark: #101410;
+}
+
+[data-md-color-scheme="default"][data-md-color-primary="custom"] {
+  --md-primary-fg-color: var(--petrol-700);
+  --md-primary-fg-color--light: var(--petrol-500);
+  --md-primary-fg-color--dark: var(--petrol-800);
+  --md-primary-bg-color: var(--paper);
+  --md-primary-bg-color--light: rgba(251, 251, 249, 0.7);
+}
+
+[data-md-color-scheme="default"][data-md-color-accent="custom"] {
+  /* Ember-700 rather than ember-600: it clears 4.5:1 on paper for link hover. */
+  --md-accent-fg-color: var(--ember-700);
+  --md-accent-fg-color--transparent: rgba(169, 83, 31, 0.1);
+  --md-accent-bg-color: var(--paper);
+  --md-accent-bg-color--light: rgba(251, 251, 249, 0.7);
+}
+
+/* ---------------------------------------------------------------------------
+   3. Palette mapping — dark ("slate" scheme). Structural night: petrol lifts,
+      ember stays warm. Backgrounds are warm near-black, never pure black.
+   --------------------------------------------------------------------------- */
+
+[data-md-color-scheme="slate"] {
+  --pooka-bg: var(--ink-900);
+  --pooka-surface: #1e241e;
+  --pooka-surface-sunken: #101410;
+  --pooka-border: #2e342d;
+  --pooka-border-strong: #3f463e;
+  --pooka-text: #eceee9;
+  --pooka-text-muted: var(--ink-400);
+  --pooka-text-subtle: var(--ink-500);
+  --pooka-brand: var(--petrol-300);
+  --pooka-brand-tint: rgba(62, 147, 140, 0.14);
+  --pooka-accent: var(--ember-500);
+  --pooka-accent-tint: rgba(196, 101, 46, 0.16);
+  --pooka-node: #2e342d;
+  --pooka-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --pooka-shadow-2: 0 2px 6px rgba(0, 0, 0, 0.45), 0 8px 20px rgba(0, 0, 0, 0.35);
+
+  --md-default-bg-color: var(--ink-900);
+  --md-default-bg-color--light: #1e241e;
+  --md-default-fg-color: #eceee9;
+  --md-default-fg-color--light: var(--ink-400);
+  --md-default-fg-color--lighter: var(--ink-500);
+  --md-default-fg-color--lightest: #2e342d;
+
+  --md-typeset-color: #eceee9;
+  --md-typeset-a-color: var(--petrol-300);
+  --md-typeset-mark-color: rgba(196, 101, 46, 0.35);
+
+  --md-code-bg-color: #101410;
+  --md-code-fg-color: #d7dad4;
+
+  --md-footer-bg-color: #101410;
+  --md-footer-bg-color--dark: #0a0d0a;
+}
+
+[data-md-color-scheme="slate"][data-md-color-primary="custom"] {
+  --md-primary-fg-color: var(--petrol-800);
+  --md-primary-fg-color--light: var(--petrol-500);
+  --md-primary-fg-color--dark: #051f1d;
+  --md-primary-bg-color: var(--paper);
+  --md-primary-bg-color--light: rgba(251, 251, 249, 0.7);
+}
+
+[data-md-color-scheme="slate"][data-md-color-accent="custom"] {
+  --md-accent-fg-color: var(--ember-300);
+  --md-accent-fg-color--transparent: rgba(238, 185, 140, 0.1);
+  --md-accent-bg-color: var(--ink-900);
+  --md-accent-bg-color--light: rgba(23, 27, 23, 0.7);
+}
+
+/* ---------------------------------------------------------------------------
+   4. The mark. The logo is the word POOKA in the brand face, shipped as
+      outlines. It is painted with currentColor through a mask, so one asset
+      serves the petrol header, the paper hero and print.
+   --------------------------------------------------------------------------- */
+
+.pooka-mark {
+  display: block;
+  aspect-ratio: 4808 / 885;
+  background-color: currentColor;
+  -webkit-mask: url("../brand/pooka-wordmark.svg") no-repeat center / contain;
+  mask: url("../brand/pooka-wordmark.svg") no-repeat center / contain;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.md-header__button.md-logo {
+  padding: 0 0.4rem;
+}
+
+.md-header__button.md-logo .pooka-mark {
+  height: 0.95rem;
+  width: auto;
+}
+
+/* The logo already spells POOKA; the site-name text beside it would repeat it.
+   The second topic (the scrolled page title) is left untouched. */
+.md-header__topic:first-child .md-ellipsis {
+  visibility: hidden;
+}
+
+@media screen and (max-width: 76.1875em) {
+  /* Without tabs the header title carries the section, so let it speak. */
+  .md-header__topic:first-child .md-ellipsis {
+    visibility: visible;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: var(--ls-kicker);
+    text-transform: uppercase;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   5. Typography. Newsreader carries the headings, IBM Plex Sans the prose,
+      IBM Plex Mono the labels. Long-form measure over dense UI text.
+   --------------------------------------------------------------------------- */
+
+.md-typeset {
+  font-size: 0.82rem;
+  line-height: var(--lh-body);
+  color: var(--pooka-text);
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: var(--ls-tight);
+  line-height: var(--lh-heading);
+  color: var(--pooka-text);
+}
+
+.md-typeset h1 {
+  font-size: 2.1rem;
+  margin-bottom: var(--space-5);
+  color: var(--pooka-text);
+}
+
+.md-typeset h2 {
+  font-size: 1.5rem;
+  margin-top: var(--space-8);
+  padding-top: var(--space-2);
+}
+
+.md-typeset h3 {
+  font-size: 1.15rem;
+  margin-top: var(--space-6);
+}
+
+.md-typeset h4 {
+  font-size: 1rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+/* Chapters open on a lead paragraph; give it a little more air. */
+.md-typeset h1 + p {
+  font-size: 1.02em;
+  color: var(--pooka-text);
+}
+
+.md-typeset a {
+  text-underline-offset: 0.2em;
+}
+
+.md-typeset a:focus-visible,
+.md-nav__link:focus-visible,
+.md-header__button:focus-visible {
+  outline: 3px solid color-mix(in oklab, var(--petrol-500) 55%, transparent);
+  outline-offset: 2px;
+  border-radius: var(--r-1);
+}
+
+/* The paper separates sections with `---`; keep those rules quiet. */
+.md-typeset hr {
+  border-bottom: 1px solid var(--pooka-border);
+  margin: var(--space-7) 0;
+}
+
+/* Reading measure. Material's content column is wide for UI docs; a design
+   paper reads better nearer the design system's 720px manifesto measure. */
+.md-grid {
+  max-width: 68rem;
+}
+
+.md-content__inner > .md-typeset > p,
+.md-content__inner > .md-typeset > ul,
+.md-content__inner > .md-typeset > ol,
+.md-content__inner > .md-typeset > blockquote,
+.md-content__inner > .md-typeset > h1,
+.md-content__inner > .md-typeset > h2,
+.md-content__inner > .md-typeset > h3,
+.md-content__inner > .md-typeset > h4 {
+  max-width: 44rem;
+}
+
+/* ---------------------------------------------------------------------------
+   6. Navigation, header and footer
+   --------------------------------------------------------------------------- */
+
+.md-header {
+  box-shadow: none;
+  border-bottom: 1px solid rgba(251, 251, 249, 0.12);
+}
+
+.md-tabs {
+  border-bottom: 1px solid rgba(251, 251, 249, 0.1);
+}
+
+.md-tabs__link {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  opacity: 0.75;
+}
+
+.md-tabs__link--active,
+.md-tabs__link:hover {
+  opacity: 1;
+}
+
+.md-nav {
+  font-size: 0.7rem;
+}
+
+.md-nav__title {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  color: var(--pooka-text-subtle);
+}
+
+.md-nav__link--active,
+.md-nav__link--active code {
+  color: var(--pooka-brand);
+  font-weight: 500;
+}
+
+/* The sidebar mirrors the paper's order; a hairline rail makes that legible. */
+.md-sidebar--primary .md-nav__list .md-nav__list {
+  border-left: 1px solid var(--pooka-border);
+  margin-left: 0.6rem;
+  padding-left: 0.4rem;
+}
+
+.md-footer-meta {
+  background-color: var(--md-footer-bg-color--dark);
+}
+
+.md-footer__link {
+  opacity: 0.85;
+}
+
+.md-copyright {
+  font-size: 0.62rem;
+}
+
+/* ---------------------------------------------------------------------------
+   7. Prose furniture: tables, blockquotes, figures, admonitions, code
+   --------------------------------------------------------------------------- */
+
+.md-typeset table:not([class]) {
+  border: 1px solid var(--pooka-border);
+  border-radius: var(--r-2);
+  box-shadow: none;
+  font-size: 0.72rem;
+}
+
+.md-typeset table:not([class]) th {
+  background-color: var(--pooka-surface-sunken);
+  color: var(--pooka-text);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.md-typeset table:not([class]) td {
+  border-top: 1px solid var(--pooka-border);
+  vertical-align: top;
+}
+
+.md-typeset blockquote {
+  border-left: 2px solid var(--pooka-accent);
+  color: var(--pooka-text-muted);
+  margin-left: 0;
+  padding-left: var(--space-5);
+}
+
+.md-typeset figure {
+  margin: var(--space-7) 0;
+  max-width: 100%;
+}
+
+.md-typeset figure img {
+  background-color: #ffffff;
+  border: 1px solid var(--pooka-border);
+  border-radius: var(--r-3);
+  box-shadow: var(--pooka-shadow-1);
+  max-width: 100%;
+  height: auto;
+  padding: var(--space-4);
+}
+
+/* Figures are drawn for light backgrounds; keep them on paper in dark mode
+   rather than inverting the diagram and misrepresenting it. */
+[data-md-color-scheme="slate"] .md-typeset figure img {
+  background-color: var(--paper);
+  border-color: var(--pooka-border-strong);
+}
+
+.md-typeset figcaption {
+  color: var(--pooka-text-muted);
+  font-size: 0.7rem;
+  margin: var(--space-4) auto 0;
+  max-width: 40rem;
+  text-align: left;
+}
+
+/* Material colours admonitions from its own palette (info cyan, warning orange)
+   using type selectors such as `.admonition.info`. Those outrank a plain
+   `.admonition` rule, so the overrides below match that same specificity and
+   re-tint every type we use to petrol, with ember reserved for warnings. */
+.md-typeset .admonition,
+.md-typeset details,
+.md-typeset .admonition.info,
+.md-typeset details.info,
+.md-typeset .admonition.note,
+.md-typeset details.note,
+.md-typeset .admonition.warning,
+.md-typeset details.warning {
+  border: 1px solid var(--pooka-border);
+  border-left: 2px solid var(--pooka-brand);
+  border-radius: var(--r-2);
+  box-shadow: none;
+  font-size: 0.74rem;
+}
+
+.md-typeset .admonition-title,
+.md-typeset summary,
+.md-typeset .info > .admonition-title,
+.md-typeset .info > summary,
+.md-typeset .note > .admonition-title,
+.md-typeset .note > summary {
+  background-color: var(--pooka-brand-tint);
+  border: none;
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+
+.md-typeset .admonition-title::before,
+.md-typeset summary::before,
+.md-typeset .info > .admonition-title::before,
+.md-typeset .info > summary::before,
+.md-typeset .note > .admonition-title::before,
+.md-typeset .note > summary::before {
+  background-color: var(--pooka-brand);
+}
+
+/* Warning is the one place ember earns its keep: a single signal per view. */
+.md-typeset .admonition.warning,
+.md-typeset details.warning {
+  border-left-color: var(--pooka-accent);
+}
+
+.md-typeset .warning > .admonition-title,
+.md-typeset .warning > summary {
+  background-color: var(--pooka-accent-tint);
+}
+
+.md-typeset .warning > .admonition-title::before,
+.md-typeset .warning > summary::before {
+  background-color: var(--pooka-accent);
+}
+
+.md-typeset code {
+  background-color: var(--md-code-bg-color);
+  border-radius: var(--r-1);
+  font-size: 0.85em;
+}
+
+/* ---------------------------------------------------------------------------
+   8. Home. The dot-field motif is the brand's texture: a sparse lattice of
+      dormant nodes. Rendered as a CSS dot grid on the 24px cell, per the
+      design system. Sparse by rule: no lit-up neural-net field.
+   --------------------------------------------------------------------------- */
+
+.pooka-hero {
+  margin-bottom: var(--space-2);
+  padding: var(--space-5) 0 var(--space-5);
+  position: relative;
+}
+
+.pooka-hero::before {
+  background-image: radial-gradient(var(--pooka-node) 1px, transparent 1px);
+  background-size: var(--dot-cell) var(--dot-cell);
+  content: "";
+  inset: 0 0 auto auto;
+  height: 168px;
+  -webkit-mask-image: linear-gradient(215deg, #000 0%, transparent 72%);
+  mask-image: linear-gradient(215deg, #000 0%, transparent 72%);
+  opacity: 0.7;
+  pointer-events: none;
+  position: absolute;
+  width: 260px;
+  z-index: 0;
+}
+
+.pooka-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* The mark is the page's h1: it spells POOKA, so no separate heading is set.
+   Material only injects its own h1 when the content has none. */
+.md-typeset .pooka-hero__title {
+  margin: 0 0 var(--space-5);
+}
+
+.md-typeset .pooka-hero__mark {
+  color: var(--petrol-600);
+  height: 3.4rem;
+  width: auto;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .pooka-hero__mark {
+  color: var(--petrol-300);
+}
+
+.md-typeset .pooka-hero__subtitle {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  font-weight: 400;
+  letter-spacing: var(--ls-tight);
+  line-height: 1.24;
+  margin: 0 0 var(--space-5);
+  max-width: 30ch;
+}
+
+.md-typeset .pooka-hero__lead {
+  color: var(--pooka-text-muted);
+  font-size: 0.94rem;
+  line-height: 1.55;
+  margin: 0;
+  max-width: 46rem;
+}
+
+/* Mono uppercase kicker with the ember tick: the one place ember appears. */
+.md-typeset .pooka-kicker {
+  align-items: center;
+  color: var(--pooka-text-muted);
+  display: flex;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  gap: 0.7em;
+  letter-spacing: var(--ls-kicker);
+  margin: 0 0 var(--space-4);
+  text-transform: uppercase;
+}
+
+.md-typeset .pooka-kicker::before {
+  background: var(--pooka-accent);
+  content: "";
+  flex: 0 0 auto;
+  height: 2px;
+  width: 18px;
+}
+
+/* Status strip: version, status, date and author, read from the paper cover. */
+.md-typeset .pooka-status {
+  border-top: 1px solid var(--pooka-border);
+  border-bottom: 1px solid var(--pooka-border);
+  display: flex;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  gap: var(--space-5);
+  margin: var(--space-6) 0;
+  max-width: 44rem;
+  padding: var(--space-4) 0;
+}
+
+.pooka-status__item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pooka-status__key {
+  color: var(--pooka-text-subtle);
+  font-size: 0.58rem;
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+}
+
+/* Primary links. Precise objects on the lattice, not marketing cards. */
+.md-typeset .pooka-actions {
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  background: var(--pooka-border);
+  border: 1px solid var(--pooka-border);
+  border-radius: var(--r-3);
+  margin: var(--space-6) 0 var(--space-8);
+  overflow: hidden;
+  max-width: 44rem;
+}
+
+.md-typeset .pooka-actions a {
+  background: var(--pooka-surface);
+  color: var(--pooka-text);
+  display: block;
+  padding: var(--space-5);
+  text-decoration: none;
+  transition: background-color 140ms ease, color 140ms ease;
+}
+
+.md-typeset .pooka-actions a:hover,
+.md-typeset .pooka-actions a:focus-visible {
+  background: var(--pooka-surface-sunken);
+  color: var(--pooka-brand);
+}
+
+.pooka-actions__title {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.pooka-actions__note {
+  color: var(--pooka-text-muted);
+  display: block;
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+/* ---------------------------------------------------------------------------
+   9. Derived pages: Core Concepts, Design Principles, Related Work.
+      Typographic structure on the lattice rather than a card grid.
+   --------------------------------------------------------------------------- */
+
+.md-typeset .pooka-concept,
+.md-typeset .pooka-principle,
+.md-typeset .pooka-perspective {
+  border-top: 1px solid var(--pooka-border);
+  max-width: 44rem;
+  padding: var(--space-5) 0 var(--space-2);
+}
+
+.md-typeset .pooka-concept > h2,
+.md-typeset .pooka-principle > h2,
+.md-typeset .pooka-perspective > h2 {
+  border: 0;
+  font-size: 1.3rem;
+  margin: 0 0 var(--space-2);
+  padding: 0;
+}
+
+.md-typeset .pooka-concept > p,
+.md-typeset .pooka-perspective > p {
+  margin: 0 0 var(--space-2);
+}
+
+.md-typeset .pooka-principle__statement {
+  color: var(--pooka-text);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  line-height: 1.45;
+  margin: 0 0 var(--space-2);
+}
+
+.md-typeset .pooka-concept__source,
+.md-typeset .pooka-principle__source,
+.md-typeset .pooka-perspective__source {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+.md-typeset .pooka-concept__source a,
+.md-typeset .pooka-principle__source a,
+.md-typeset .pooka-perspective__source a {
+  color: var(--pooka-text-subtle);
+}
+
+.md-typeset .pooka-concept__source a:hover,
+.md-typeset .pooka-principle__source a:hover,
+.md-typeset .pooka-perspective__source a:hover {
+  color: var(--pooka-brand);
+}
+
+/* ---------------------------------------------------------------------------
+   10. Print. The paper should print as a paper.
+   --------------------------------------------------------------------------- */
+
+@media print {
+  .md-typeset {
+    font-size: 10pt;
+    line-height: 1.5;
+  }
+
+  .md-typeset h1,
+  .md-typeset h2,
+  .md-typeset h3 {
+    break-after: avoid;
+  }
+
+  .md-typeset figure,
+  .md-typeset table,
+  .md-typeset .admonition {
+    break-inside: avoid;
+  }
+
+  .md-typeset figure img {
+    border: 1px solid var(--ink-300);
+    box-shadow: none;
+  }
+
+  .pooka-hero::before,
+  .md-typeset .pooka-actions {
+    display: none;
+  }
+
+  .md-content__inner > .md-typeset > p,
+  .md-content__inner > .md-typeset > h1,
+  .md-content__inner > .md-typeset > h2 {
+    max-width: none;
+  }
+
+  /* Show where a link points when the page has left the screen. */
+  .md-typeset a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 8pt;
+    word-break: break-all;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   11. Motion. Restrained by design, and off entirely on request.
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

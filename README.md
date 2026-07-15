@@ -93,7 +93,13 @@ POOKA/
 ├── figures/                Exported images used by the paper.
 ├── references/             Bibliography, related work and terminology.
 ├── reviews/                Review records per reviewer and a shared log.
-└── archive/                Frozen historical versions (POOKA_v0.1.md).
+├── archive/                Frozen historical versions (POOKA_v0.1.md).
+│
+├── docs/                   Website pages (see "The website" below).
+├── overrides/              Material for MkDocs template overrides.
+├── scripts/sync_docs.py    Copies the canonical sources into docs/ at build time.
+├── mkdocs.yml              Website configuration.
+└── requirements.txt        Pinned website toolchain.
 ```
 
 ## Editing workflow
@@ -113,6 +119,58 @@ POOKA/
 ## Status and versioning
 
 The paper is currently Draft v0.3. See [CHANGELOG.md](CHANGELOG.md) for version history and [decisions/](decisions/) for the architectural decisions behind it (e.g. [ADR-001](decisions/ADR-001-why-these-core-concepts.md) on the choice of Core Concepts, [ADR-002](decisions/ADR-002-identity-ownership-vs-membership.md) on Identity).
+
+## The website
+
+The paper is published at **[pooka.info](https://pooka.info)**, built with
+[Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) and deployed to GitHub Pages
+by [`.github/workflows/pages.yml`](.github/workflows/pages.yml) on every push to `main`.
+
+### The repository stays the source of truth
+
+The website never holds its own copy of the paper. [`scripts/sync_docs.py`](scripts/sync_docs.py)
+runs automatically before every `mkdocs serve` and `mkdocs build` (as an `on_pre_build` hook) and:
+
+- copies `paper/*.md` verbatim into `docs/paper/`, each with a "generated" banner;
+- copies `references/terminology.md` and `references/bibliography.md` into `docs/reference/`;
+- copies exported figures from `figures/` into `docs/assets/images/`;
+- derives the Core Concepts, Design Principles and Related Work pages from the canonical
+  chapter headings, so those pages cannot drift from the paper;
+- reads the version, status, date and author straight off `paper/00-cover.md`;
+- fails the build if `paper/08-core-concepts.md` and `references/terminology.md` disagree about
+  the Core Concepts.
+
+Everything it generates is git-ignored and **must never be edited by hand**: edit the canonical
+file instead. `python scripts/sync_docs.py --check` proves the generated tree still matches the
+canonical sources, and CI runs it before building.
+
+A figure that has not been exported from `diagrams/` yet renders as a clearly marked placeholder
+naming the expected filename, so a missing export never silently breaks the site.
+
+### Local development
+
+```bash
+python -m venv .venv
+source .venv/bin/activate      # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+mkdocs serve                   # preview at http://127.0.0.1:8000
+mkdocs build --strict          # production build, warnings are errors
+```
+
+Synchronisation runs on its own for both commands; there is no separate step to remember.
+
+### Fonts, privacy and the logo
+
+The site loads no third-party asset and contains no analytics, cookies or tracking. The webfonts
+(Newsreader, IBM Plex Sans, IBM Plex Mono) are declared in `docs/assets/stylesheets/fonts.css`
+and downloaded to our own origin at build time by the Material privacy plugin, so no visitor
+request reaches Google. No font binary is committed here.
+
+The POOKA logo is the word POOKA in the brand face, shipped as outlines in
+`docs/assets/brand/pooka-wordmark.svg` rather than as a webfont. Regenerate it with
+[`scripts/make_wordmark.py`](scripts/make_wordmark.py) only when the logo itself changes; it
+needs the licensed font, which lives outside this repository.
 
 ## License
 

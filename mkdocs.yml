@@ -1,0 +1,158 @@
+# Website build for the POOKA Design Paper.
+#
+# The repository is the source of truth. The canonical paper lives in paper/ and
+# is copied into docs/paper/ by scripts/sync_docs.py, which runs automatically as
+# an on_pre_build hook. Never edit anything under docs/paper/, docs/reference/ or
+# docs/assets/images/: those are generated and are overwritten on every build.
+
+site_name: POOKA
+site_url: https://pooka.info/
+site_author: Maarten Meijer
+site_description: >-
+  POOKA is an architectural style for Human-AI Information Architecture. It defines
+  context, semantics, governance and behavior as persistent architectural elements
+  rather than transient prompt content.
+
+repo_url: https://github.com/conceptblenders/POOKA
+repo_name: conceptblenders/POOKA
+edit_uri: edit/main/docs/
+
+docs_dir: docs
+site_dir: site
+
+copyright: >-
+  POOKA Design Paper by Maarten Meijer. A design paper, not a standard or specification.
+
+# Synchronise the canonical sources before MkDocs collects any files, on both
+# `mkdocs serve` and `mkdocs build`. A failure here aborts the build on purpose.
+hooks:
+  - scripts/sync_docs.py
+
+# Rebuild `mkdocs serve` when a canonical source changes, not only the copies.
+watch:
+  - paper
+  - references
+  - figures
+  - scripts
+  - overrides
+
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+  anchors: warn
+
+theme:
+  name: material
+  custom_dir: overrides
+  language: en
+  # Font loading is handled through extra_css + the privacy plugin, so the site
+  # makes no third-party request at runtime.
+  font: false
+  logo: assets/brand/pooka-wordmark.svg
+  favicon: assets/brand/favicon.svg
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.tracking
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+  icon:
+    repo: fontawesome/brands/github
+    edit: material/pencil-outline
+
+plugins:
+  # Client-side search only. No external search provider, no tracking.
+  - search
+  # Downloads external assets (the webfonts) at build time and serves them from
+  # our own origin, so no visitor request ever reaches a third party.
+  - privacy
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      permalink_title: Link to this section
+      toc_depth: 3
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.smartsymbols
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.snippets:
+      # Fragments derived from the canonical paper by scripts/sync_docs.py.
+      base_path:
+        - build/partials
+      check_paths: true
+
+extra_css:
+  # Vendored @font-face rules. The privacy plugin downloads the .woff2 files at
+  # build time and rewrites these to our own origin: no third-party request, and
+  # no font binary in the repository.
+  - assets/stylesheets/fonts.css
+  - assets/stylesheets/pooka.css
+
+extra:
+  # Material renders a "made with" line and social icons by default; keep only
+  # the repository, and no analytics of any kind.
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/conceptblenders/POOKA
+      name: POOKA on GitHub
+  generator: false
+
+nav:
+  - Home: index.md
+  - Design Paper:
+      - Cover: paper/00-cover.md
+      - "1. Introduction": paper/01-introduction.md
+      - "2. The Architectural Challenge": paper/02-architectural-challenge.md
+      - "3. Status": paper/03-status.md
+      - "4. Scope": paper/04-scope.md
+      - "5. Foundational Assumptions": paper/05-foundational-assumptions.md
+      - "6. Existing Perspectives": paper/06-existing-perspectives.md
+      - "7. Design Principles": paper/07-design-principles.md
+      - "8. Core Concepts": paper/08-core-concepts.md
+      - "9. Architectural Model": paper/09-architectural-model.md
+      - "10. Architectural Patterns": paper/10-architectural-patterns.md
+      - "11. Implementation Principles": paper/11-implementation-principles.md
+      - "12. Limitations": paper/12-limitations.md
+      - "13. Discussion": paper/13-discussion.md
+      - "14. Future Evolution": paper/14-future-evolution.md
+      - "15. Conclusion": paper/15-conclusion.md
+      - Glossary: reference/terminology.md
+      - Bibliography: reference/bibliography.md
+  - Core Concepts: core-concepts.md
+  - Design Principles: design-principles.md
+  - Architectural Model: architectural-model.md
+  - Related Work: related-work.md
+  - About: about.md
+  - Downloads: downloads.md

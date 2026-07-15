@@ -1,0 +1,88 @@
+# Build the POOKA website from the canonical paper and deploy it to GitHub Pages.
+#
+# The repository is the source of truth. This workflow copies the canonical paper into
+# the documentation tree, proves the copies are identical to their sources, and only
+# then builds and publishes. Any failure in that chain fails the deployment.
+
+name: Deploy website
+
+on:
+  push:
+    branches: [main]
+    # A change to the paper, the site scaffolding or this workflow can affect the
+    # published site; nothing else can.
+    paths:
+      - "paper/**"
+      - "references/**"
+      - "figures/**"
+      - "diagrams/**"
+      - "docs/**"
+      - "overrides/**"
+      - "scripts/**"
+      - "mkdocs.yml"
+      - "requirements.txt"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running deployment finish rather than cancelling it half-published.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install pinned dependencies
+        run: pip install --require-hashes=false -r requirements.txt
+
+      # The privacy plugin downloads the webfonts at build time so the published
+      # site makes no third-party request. Cache them between runs.
+      - name: Restore the external asset cache
+        uses: actions/cache@v4
+        with:
+          key: mkdocs-material-${{ hashFiles('mkdocs.yml', 'requirements.txt') }}
+          restore-keys: mkdocs-material-
+          path: .cache
+
+      - name: Synchronise the canonical content
+        run: python scripts/sync_docs.py --verbose
+
+      - name: Verify the generated copies match the canonical sources
+        run: python scripts/sync_docs.py --check
+
+      - name: Build the site
+        run: mkdocs build --strict
+
+      - name: Upload the site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
