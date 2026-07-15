@@ -36,6 +36,10 @@ docs/reference/
 docs/assets/images/
 build/
 
+# The PDF edition, rendered from the canonical chapters by scripts/build_pdf.py.
+# It is a build artifact: CI rebuilds it on every deploy, so it is not committed.
+docs/assets/pdf/
+
 # The brand font is licensed and deliberately not distributed. The logo ships as
 # outlines in docs/assets/brand/ instead; see scripts/make_wordmark.py.
 *.ttf

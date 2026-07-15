@@ -160,6 +160,38 @@ mkdocs build --strict          # production build, warnings are errors
 
 Synchronisation runs on its own for both commands; there is no separate step to remember.
 
+### The PDF edition
+
+The PDF is rendered from the same canonical chapters, so it cannot disagree with the website.
+It is built separately because it needs a browser:
+
+```bash
+pip install -r requirements-pdf.txt
+python -m playwright install chromium
+python scripts/build_pdf.py
+```
+
+This writes `docs/assets/pdf/pooka-design-paper-v<version>.pdf`, taking the version from
+`paper/00-cover.md`. The Downloads page links it automatically once it exists, and shows a
+clearly marked note when it does not, so the site builds either way. CI rebuilds it on every
+deploy, which is why the PDF is not committed.
+
+Unlike the Markdown chapters, the PDF places each figure inline, directly after the paragraph
+that cites it. The chapters reference the `.drawio` sources, which a PDF reader cannot open.
+Placement is derived from the paper's own citation text rather than configured, and it happens
+in the rendered HTML only: no chapter file is modified.
+
+### Diagrams
+
+`diagrams/*.drawio` are the editable sources; `figures/*.svg` are the exports the website and
+the PDF consume. After editing a diagram:
+
+```bash
+python scripts/export_figures.py     # needs draw.io Desktop; not used by CI
+```
+
+The exports are committed, so a normal build never needs draw.io installed.
+
 ### Fonts, privacy and the logo
 
 The site loads no third-party asset and contains no analytics, cookies or tracking. The webfonts
@@ -174,4 +206,16 @@ needs the licensed font, which lives outside this repository.
 
 ## License
 
-See [LICENSE.md](LICENSE.md) — to be determined. Until a license is set, no rights to reuse are granted beyond reading the material on GitHub.
+Two licences, because this repository holds two kinds of work. See [LICENSE.md](LICENSE.md).
+
+- **The Design Paper and its figures** (`paper/`, `references/`, `diagrams/`, `figures/`,
+  `decisions/`, `archive/`) are licensed under
+  [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/): share and adapt freely, including
+  commercially, with attribution.
+- **The website and tooling** (`scripts/`, `docs/`, `overrides/`, `mkdocs.yml`, `.github/`) are
+  licensed under the MIT Licence.
+
+Neither licence grants rights to the POOKA name or wordmark.
+
+> Meijer, M. (2026). *POOKA: An Architectural Style for Human–AI Information Architecture*
+> (Design Paper, Draft v0.3). <https://pooka.info>. Licensed under CC BY 4.0.

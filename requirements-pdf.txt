@@ -1,0 +1,5 @@
+# Toolchain for the PDF edition only (scripts/build_pdf.py).
+# The website build does not need this; see requirements.txt.
+# After installing, fetch the browser once:  python -m playwright install chromium
+playwright==1.56.0
+markdown==3.7

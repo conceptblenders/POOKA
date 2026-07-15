@@ -43,6 +43,7 @@ DOCS_DIR = REPO_ROOT / "docs"
 DOCS_PAPER_DIR = DOCS_DIR / "paper"
 DOCS_REFERENCE_DIR = DOCS_DIR / "reference"
 DOCS_IMAGES_DIR = DOCS_DIR / "assets" / "images"
+DOCS_PDF_DIR = DOCS_DIR / "assets" / "pdf"
 
 PARTIALS_DIR = REPO_ROOT / "build" / "partials"
 
@@ -417,6 +418,42 @@ def _generate_related_work(writer: _Writer) -> None:
     )
 
 
+def _generate_pdf_link(writer: _Writer, version: str) -> bool:
+    """Point the Downloads page at the PDF edition, or say plainly that it is absent.
+
+    The PDF is built by scripts/build_pdf.py, which is not part of the site build:
+    it needs a browser. So the site must render correctly either way, and must
+    never advertise a download that does not exist.
+    """
+    name = f"pooka-design-paper-v{version}.pdf"
+    pdf = DOCS_PDF_DIR / name
+
+    if pdf.exists():
+        size_mb = pdf.stat().st_size / (1024 * 1024)
+        fragment = (
+            '<div class="pooka-actions" markdown="1">\n'
+            f'[<span class="pooka-actions__title">Download the PDF</span>'
+            f'<span class="pooka-actions__note">The complete paper, {size_mb:.1f} MB. '
+            f"Draft v{version}, rendered from the canonical chapters.</span>]"
+            f"(assets/pdf/{name})\n"
+            "</div>\n"
+        )
+    else:
+        fragment = (
+            '!!! note "PDF"\n\n'
+            "    No PDF edition has been built for this version yet. It is generated from\n"
+            "    the canonical chapters with `python scripts/build_pdf.py`, and appears here\n"
+            "    once built. Until then the Markdown source and this website are the only\n"
+            "    editions, and neither should be cited as a PDF.\n"
+        )
+
+    writer.write(
+        PARTIALS_DIR / "pdf-download.md",
+        PARTIAL_BANNER.format(source="docs/assets/pdf/ (built by scripts/build_pdf.py)") + fragment,
+    )
+    return pdf.exists()
+
+
 def _parse_cover_field(text: str, label: str) -> str:
     match = re.search(rf"^\*\*{label}\*\*\s*\n(.+?)$", text, re.MULTILINE)
     if not match:
@@ -468,6 +505,7 @@ def synchronise(*, check: bool = False, verbose: bool = False) -> _Writer:
     _generate_design_principles(writer)
     _generate_related_work(writer)
     meta = _generate_status(writer)
+    has_pdf = _generate_pdf_link(writer, meta["version"])
 
     if verbose:
         print(
@@ -476,6 +514,8 @@ def synchronise(*, check: bool = False, verbose: bool = False) -> _Writer:
         )
         for name in missing_figures:
             print(f"  NOTE   figure not exported yet: {name}")
+        if not has_pdf:
+            print(f"  NOTE   no PDF for v{meta['version']} yet: python scripts/build_pdf.py")
 
     return writer
 

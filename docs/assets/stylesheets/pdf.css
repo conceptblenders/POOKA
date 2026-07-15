@@ -1,0 +1,321 @@
+/* ============================================================================
+   POOKA — PDF edition.
+
+   Print styles for the single-document rendering built by scripts/build_pdf.py.
+   Same design system as the website (petrol structure, rationed ember, warm
+   graphite, Newsreader over IBM Plex), retuned for paper: a longer measure is
+   fine at A4, but the type scale and rhythm come down to print sizes.
+
+   Page margins and the page-number footer are set by the Chromium print call,
+   not here; see scripts/build_pdf.py.
+   ============================================================================ */
+
+:root {
+  --paper: #fbfbf9;
+  --ink-200: #dcded8;
+  --ink-300: #c0c4bc;
+  --ink-400: #969c92;
+  --ink-500: #6b7269;
+  --ink-700: #343a33;
+  --ink-900: #171b17;
+
+  --petrol-700: #0b3e3a;
+  --petrol-600: #0e4f4a;
+  --petrol-500: #157069;
+  --ember-600: #c4652e;
+
+  --font-display: "Newsreader", Georgia, serif;
+  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+@page {
+  size: A4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+  color: var(--ink-900);
+  font-family: var(--font-body);
+  font-size: 10pt;
+  line-height: 1.58;
+  /* Justified text with hyphenation reads better at this measure on A4. */
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* --- Cover ---------------------------------------------------------------- */
+
+.cover {
+  break-after: page;
+  display: flex;
+  flex-direction: column;
+  /* Fill the printable height so the colophon sits at the foot of the page. */
+  min-height: 245mm;
+  text-align: left;
+}
+
+.cover__mark {
+  color: var(--petrol-600);
+  margin-top: 24mm;
+  width: 74mm;
+}
+
+.cover__mark svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.cover__title {
+  font-family: var(--font-display);
+  font-size: 25pt;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 14mm 0 0;
+  text-align: left;
+}
+
+.cover__kind {
+  color: var(--ink-500);
+  font-family: var(--font-mono);
+  font-size: 8pt;
+  letter-spacing: 0.14em;
+  margin: 6mm 0 0;
+  text-transform: uppercase;
+}
+
+.cover__kind::before {
+  background: var(--ember-600);
+  content: "";
+  display: inline-block;
+  height: 2px;
+  margin-right: 0.7em;
+  vertical-align: middle;
+  width: 18px;
+}
+
+.cover__meta {
+  /* The label and its value are set at different sizes, so align them on the
+     baseline rather than the box: otherwise each row reads as slightly askew. */
+  align-items: baseline;
+  border-top: 1px solid var(--ink-200);
+  display: grid;
+  grid-template-columns: 22mm 1fr;
+  gap: 2mm 0;
+  margin: auto 0 0;
+  padding-top: 5mm;
+}
+
+.cover__meta dt {
+  color: var(--ink-400);
+  font-family: var(--font-mono);
+  font-size: 7pt;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cover__meta dd {
+  font-size: 9.5pt;
+  margin: 0;
+}
+
+.cover__foot {
+  border-top: 1px solid var(--ink-200);
+  color: var(--ink-500);
+  font-family: var(--font-mono);
+  font-size: 7pt;
+  line-height: 1.7;
+  margin: 5mm 0 0;
+  padding-top: 4mm;
+  text-align: left;
+}
+
+.cover__foot span {
+  color: var(--ink-400);
+}
+
+/* --- Contents ------------------------------------------------------------- */
+
+.toc {
+  break-after: page;
+}
+
+.toc h1 {
+  font-family: var(--font-display);
+  font-size: 19pt;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin: 0 0 8mm;
+}
+
+.toc ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.toc li {
+  border-bottom: 1px solid var(--ink-200);
+  padding: 2.4mm 0;
+}
+
+.toc a {
+  color: var(--ink-900);
+  text-decoration: none;
+}
+
+/* --- Chapters ------------------------------------------------------------- */
+
+.chapter {
+  break-before: page;
+}
+
+h1, h2, h3, h4 {
+  break-after: avoid;
+  color: var(--ink-900);
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  text-align: left;
+  /* A heading alone at the foot of a page is worse than a slightly short page. */
+  break-inside: avoid;
+}
+
+h1 {
+  font-size: 20pt;
+  margin: 0 0 7mm;
+}
+
+h2 {
+  font-size: 13.5pt;
+  margin: 9mm 0 3mm;
+}
+
+h3 {
+  font-size: 11pt;
+  margin: 7mm 0 2mm;
+}
+
+h4 {
+  font-family: var(--font-body);
+  font-size: 10pt;
+  font-weight: 600;
+  margin: 5mm 0 2mm;
+}
+
+p {
+  margin: 0 0 3.4mm;
+  orphans: 3;
+  widows: 3;
+}
+
+/* The chapter's opening paragraph carries the argument; give it presence. */
+h1 + p {
+  font-size: 10.5pt;
+}
+
+strong {
+  font-weight: 600;
+}
+
+a {
+  color: var(--petrol-600);
+  text-decoration: none;
+}
+
+ul, ol {
+  margin: 0 0 3.4mm;
+  padding-left: 5mm;
+}
+
+li {
+  margin-bottom: 1.2mm;
+}
+
+/* The paper separates sections with `---`; keep the rule quiet on paper. */
+hr {
+  border: 0;
+  border-top: 1px solid var(--ink-200);
+  margin: 6mm 0;
+}
+
+/* --- Figures -------------------------------------------------------------- */
+
+.figure {
+  background: var(--paper);
+  border: 1px solid var(--ink-200);
+  border-radius: 3pt;
+  break-inside: avoid;
+  margin: 6mm 0;
+  padding: 4mm;
+  text-align: center;
+}
+
+.figure img {
+  display: block;
+  height: auto;
+  margin: 0 auto;
+  max-height: 190mm;
+  max-width: 100%;
+}
+
+.figure figcaption {
+  color: var(--ink-500);
+  font-size: 8pt;
+  line-height: 1.45;
+  margin-top: 3mm;
+  text-align: left;
+}
+
+/* --- Tables (the glossary) ------------------------------------------------ */
+
+table {
+  border-collapse: collapse;
+  font-size: 8.5pt;
+  margin: 4mm 0;
+  text-align: left;
+  width: 100%;
+}
+
+th {
+  background: #f4f5f2;
+  border: 1px solid var(--ink-200);
+  color: var(--ink-700);
+  font-family: var(--font-mono);
+  font-size: 7pt;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 2mm;
+  text-transform: uppercase;
+}
+
+td {
+  border: 1px solid var(--ink-200);
+  padding: 2mm;
+  vertical-align: top;
+}
+
+tr {
+  break-inside: avoid;
+}
+
+code {
+  background: #f4f5f2;
+  border-radius: 2pt;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  padding: 0.5mm 1mm;
+}

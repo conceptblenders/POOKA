@@ -107,5 +107,19 @@ please open an issue or a pull request on
 
 ## Licensing
 
-Licensing terms are still to be determined; see `LICENSE.md` in the repository. Until a licence
-is set, no rights to reuse are granted beyond reading the material.
+The Design Paper, its figures, decision records and reference material are licensed under
+[Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/)
+(CC BY 4.0). You are free to share and adapt the material, including commercially, provided you
+give appropriate credit, link to the licence and indicate whether you made changes.
+
+The website and the tooling that builds it are licensed under the MIT Licence.
+
+Neither licence grants rights to the POOKA name or wordmark. You may describe an implementation
+as conforming to POOKA or based on POOKA; using the name or mark in a way that suggests
+endorsement or certification requires permission.
+
+POOKA is a design paper, not a validated standard, and [Chapter 3](paper/03-status.md) says so
+explicitly. The licence permits adaptation, but attribution does not make it accurate to present
+POOKA as something it is not. If you adapt the paper, indicate what you changed.
+
+Full terms: [LICENSE.md](https://github.com/conceptblenders/POOKA/blob/main/LICENSE.md).

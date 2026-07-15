@@ -50,7 +50,10 @@ jobs:
           cache-dependency-path: requirements.txt
 
       - name: Install pinned dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r requirements.txt -r requirements-pdf.txt
+
+      - name: Install the browser that renders the PDF
+        run: python -m playwright install --with-deps chromium
 
       # The privacy plugin downloads the webfonts at build time so the published
       # site makes no third-party request. Cache them between runs.
@@ -60,6 +63,10 @@ jobs:
           key: mkdocs-material-${{ hashFiles('mkdocs.yml', 'requirements.txt') }}
           restore-keys: mkdocs-material-
           path: .cache
+
+      # Before the sync, so it can link the PDF instead of a placeholder.
+      - name: Render the PDF edition from the canonical chapters
+        run: python scripts/build_pdf.py
 
       - name: Synchronise the canonical content
         run: python scripts/sync_docs.py --verbose

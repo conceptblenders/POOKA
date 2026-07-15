@@ -21,7 +21,9 @@ docs_dir: docs
 site_dir: site
 
 copyright: >-
-  POOKA Design Paper by Maarten Meijer. A design paper, not a standard or specification.
+  POOKA Design Paper by Maarten Meijer, licensed under
+  <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>.
+  A design paper, not a standard or specification.
 
 # Synchronise the canonical sources before MkDocs collects any files, on both
 # `mkdocs serve` and `mkdocs build`. A failure here aborts the build on purpose.

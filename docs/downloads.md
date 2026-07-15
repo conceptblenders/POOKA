@@ -14,6 +14,8 @@ That repository is the canonical source: this website and any export are generat
 
 ## The paper
 
+--8<-- "pdf-download.md"
+
 <div class="pooka-actions" markdown="1">
 [<span class="pooka-actions__title">Read online</span><span class="pooka-actions__note">The complete paper, chapter by chapter, in its canonical order.</span>](paper/00-cover.md)
 [<span class="pooka-actions__title">Markdown source</span><span class="pooka-actions__note">The canonical chapter files under paper/ in the repository.</span>](https://github.com/conceptblenders/POOKA/tree/main/paper)
@@ -21,11 +23,9 @@ That repository is the canonical source: this website and any export are generat
 [<span class="pooka-actions__title">GitHub repository</span><span class="pooka-actions__note">Browse the source, open an issue or propose a change.</span>](https://github.com/conceptblenders/POOKA)
 </div>
 
-!!! note "PDF"
-
-    No PDF edition has been generated yet. When one is produced from the canonical chapters it
-    will be published here. Until then the Markdown source and this website are the only
-    editions, and neither should be cited as a PDF.
+The PDF is a rendering of the same canonical chapters this website is built from, so the two
+can never disagree. It carries the figures inline at the point the paper cites them, which the
+Markdown chapters do not: they reference the `.drawio` sources, which a PDF reader cannot open.
 
 ## Reference material
 
@@ -77,3 +77,12 @@ website when a permanent reference is needed.
 
     POOKA is a design paper, not a standard, specification or empirically validated result.
     Chapter 3 states this explicitly, and any citation should preserve that framing.
+
+## Licence
+
+The paper and its figures are licensed under
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/): share and adapt freely, including
+commercially, with attribution. The website and its tooling are under the MIT Licence. Neither
+grants rights to the POOKA name or wordmark. See [About](about.md#licensing) for what that means
+in practice, or [LICENSE.md](https://github.com/conceptblenders/POOKA/blob/main/LICENSE.md) for
+the full terms.
