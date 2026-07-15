@@ -1,0 +1,19 @@
+{#-
+  Repository link without the star/fork counter.
+
+  Material's stock partial carries `data-md-component="source"`, which makes the
+  theme fetch repository facts from api.github.com in the visitor's browser on
+  every page view. That is a third-party request, and it would send each
+  reader's IP address to GitHub just to render two numbers. This site makes no
+  third-party request, so the attribute is omitted: the link still points at the
+  canonical repository, only the live counter is gone.
+-#}
+<a href="{{ config.repo_url }}" title="{{ lang.t('source') }}" class="md-source">
+  <div class="md-source__icon md-icon">
+    {% set icon = config.theme.icon.repo or "fontawesome/brands/git-alt" %}
+    {% include ".icons/" ~ icon ~ ".svg" %}
+  </div>
+  <div class="md-source__repository">
+    {{ config.repo_name }}
+  </div>
+</a>
