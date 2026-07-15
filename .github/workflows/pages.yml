@@ -50,7 +50,7 @@ jobs:
           cache-dependency-path: requirements.txt
 
       - name: Install pinned dependencies
-        run: pip install --require-hashes=false -r requirements.txt
+        run: pip install -r requirements.txt
 
       # The privacy plugin downloads the webfonts at build time so the published
       # site makes no third-party request. Cache them between runs.
