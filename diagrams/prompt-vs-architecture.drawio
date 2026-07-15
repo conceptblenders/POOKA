@@ -1,0 +1,48 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Prompt vs Architecture" id="prompt-vs-architecture">
+    <mxGraphModel dx="900" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="Prompt as primary source of context versus architecture as primary source of context (Chapter 2; sections 7.2 and 8.5)" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="10" width="700" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="lhdr" value="Current approach: prompt as primary source of context" style="text;html=1;align=center;verticalAlign=middle;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="50" width="300" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="l1" value="Prompt (runtime instruction)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="100" width="200" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="l2" value="roles, objectives, behavioral expectations, terminology, context, background" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="190" width="260" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="l3" value="Transient context: difficult to maintain and reuse" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="320" width="220" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_l1_l2" value="establishes at runtime" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="l1" target="l2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_l2_l3" value="results in" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="l2" target="l3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rhdr" value="POOKA: architecture as primary source of context" style="text;html=1;align=center;verticalAlign=middle;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="50" width="300" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="r1" value="Persistent architecture: context, semantics, governance, behavior" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="100" width="260" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="r2" value="Prompt (consumer of architecture)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="270" width="220" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_r1_r2" value="consumed at execution" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" edge="1" parent="1" source="r1" target="r2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
